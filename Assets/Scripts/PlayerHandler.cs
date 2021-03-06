@@ -6,6 +6,7 @@ public class PlayerHandler : MonoBehaviour
 {
     
     CharacterController character;
+    FootstepsHandler fHandler;
     
     public float MovementSpeed = 1;
     public float Gravity = 9.8f;
@@ -14,6 +15,7 @@ public class PlayerHandler : MonoBehaviour
     void Start()
     {
         character = GetComponent<CharacterController>();
+        fHandler = GetComponent<FootstepsHandler>();
     }
 
 
@@ -22,6 +24,12 @@ public class PlayerHandler : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal")*MovementSpeed;
         float vertical = Input.GetAxis("Vertical")*MovementSpeed;
         character.Move((transform.right*horizontal+transform.forward*vertical)*Time.deltaTime);
+
+        //Make footsteps flag true
+        if(horizontal != 0.0f || vertical != 0.0f)
+            fHandler.IsWalking = true;
+        else
+            fHandler.IsWalking = false;
 
         if(character.isGrounded)
             velocity = 0;
