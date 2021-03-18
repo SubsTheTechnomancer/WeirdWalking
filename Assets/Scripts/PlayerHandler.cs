@@ -7,7 +7,10 @@ public class PlayerHandler : MonoBehaviour
     
     CharacterController character;
     FootstepsHandler fHandler;
-    
+
+    Light flashlight;
+    bool toggleLight = false;
+
     public float MovementSpeed = 1;
     public float Gravity = 9.8f;
     public float velocity = 0;
@@ -16,6 +19,7 @@ public class PlayerHandler : MonoBehaviour
     {
         character = GetComponent<CharacterController>();
         fHandler = GetComponent<FootstepsHandler>();
+        flashlight = GetComponentInChildren<Light>();
     }
 
 
@@ -36,6 +40,13 @@ public class PlayerHandler : MonoBehaviour
         else{
             velocity -= Gravity*Time.deltaTime;
             character.Move(new Vector3(0,velocity,0));
-        }   
+        }
+
+        if(Input.GetKeyDown("e")){
+            toggleLight = !toggleLight;
+            if(toggleLight) flashlight.enabled = true;
+            else flashlight.enabled = false;
+        }
+
     }
 }
